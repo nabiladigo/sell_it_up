@@ -13,50 +13,74 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 // Routes
+
+
 app.get("/", function(req, res) {
     res.send("This is working! :)")
 })
 
 app.get('/products/', (req, res) => {
-
+    
     const allProducts = products.find();
-            /* 
-                1. the first param of render() is the .ejs file 
-                that we want to inject data into.
+    /* 
+    1. the first param of render() is the .ejs file 
+    that we want to inject data into.
     
-                2. the second param is the data that we want 
-                to inject into the .ejs file (it must be an object)
-            */
-    
-            /*	
-                there will be a variable available inside
-                the show.ejs file called product, 
-                and its value the foundItem
-            */
-        const context = { products: allProducts };
-        res.render('index.ejs', context);
-
+    2. the second param is the data that we want 
+    to inject into the .ejs file (it must be an object)
+    */
+   
+   /*	
+   there will be a variable available inside
+   the show.ejs file called product, 
+   and its value the foundItem
+   */
+  const context = { products: allProducts };
+  res.render('index.ejs', context);
+  
 });
 
 // show route
 // this route will catch GET requests to /products/index/ and respond with a single product
-app.get("/products/:productId", (req, res) => {
-    products.findById(req.params.productId, (error, foundItem) => {
-        if (error) return console.log(error);
+app.get('/products/:productId', (req, res) => {
     
-        return res.send(foundItem);
+    products.findById(req.params.productId, (error, foundProduct) => {
+        if (error) {
+            console.log(error);
+            req.error = error;
+            return next();
+        }
+        /* 
+        1. the first param of render() is the .ejs file 
+        that we want to inject data into.
+        
+        2. the second param is the data that we want 
+        to inject into the .ejs file (it must be an object)
+        */
+
+        /*	
+        there will be a variable available inside
+        the show.ejs file called product, 
+        and its value the foundItem
+       */
+        res.render('show.ejs', {product: foundProduct});
     });
+    
 });
 
 // app.get("/products/:index", function(req, res) {
-//     res.send(
-//         `<h1>Would you like to buy this cool ${products[req.params.index].name}</h1>
-//         <h3>Price: $${products[req.params.index].price}</h3>
-//         <ahref="${products[req.params.index].image}">Image</a>`
-//         )
-// })
-
-
+    //     res.send(
+        //         `<h1>Would you like to buy this cool ${products[req.params.index].name}</h1>
+        //         <h3>Price: $${products[req.params.index].price}</h3>
+        //         <ahref="${products[req.params.index].image}">Image</a>`
+        //         )
+        // })
+        
+app.get("/*", (req, res) => {
+    const context = { error: req.error };
+    return res.status(404).render("404", context);
+});
+        
 app.listen(PORT, function() {
     console.log(`I am listening on port ${PORT}`)
 });
