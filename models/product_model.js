@@ -80,6 +80,18 @@ class Collection {
     
         return callBack(error, newItem);
     }
+
+    findByIdAndDelete( itemId, callBack ) {
+        let error = null;
+        const item = this.#items[itemId]
+        const isDeleted = delete this.#items[itemId];
+    
+        if ( !isDeleted ) {
+            error = { message: `item with id "${itemId}" can't be found` };
+        }
+    
+        return callBack(error, item);
+    }
 };
 
 class Product {

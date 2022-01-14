@@ -67,6 +67,13 @@
           <div class="content">
             <h3>name: <%= product.name %></h3>
             <small>price: $<%= product.price %></small>
+            <div class="field mt-5 is-grouped">
+              <p class="control">
+                <form action="/products/<%= product.id %>?_method=DELETE" method="POST">
+                    <input class="button is-danger" type="submit" value="Delete Product"/>                    
+                </form>
+              </p>
+            </div>
           </div>
         </div>
       </article>

@@ -67,4 +67,16 @@ router.get('/:productId', (req, res) => {
     
 });
 
+router.delete('/:productId', (req, res) => {
+    products.findByIdAndDelete(req.params.productId, (error, deleteProduct) => {
+        if(error) {
+            console.log(error);
+            res.send(error);
+        }
+
+        console.log(deleteProduct);
+        res.redirect('/products')
+    })
+})
+
 module.exports = router;
