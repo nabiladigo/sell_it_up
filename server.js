@@ -12,9 +12,9 @@ const PORT = 4000;
 app.set('view engine', 'ejs');
 
 // App.use for adding 
-app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
+app.use(methodOverride('_method'))
 
 app.use('/products', productsController)
 

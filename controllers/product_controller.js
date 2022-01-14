@@ -90,14 +90,14 @@ router.get('/:productId/edit', (req, res) => {
 
 router.put('/:productId', (req, res) => {
     console.log(`The request is ${req}`)
-    console.log(`The request's body is ${req.body}`)
+    // console.log(`The request's body is ${req.body}`)
 
     products.findByIdAndUpdate(req.params.productId, req.body,(error, updatedProduct) => {
         if (error) return console.log(error);
 
         console.log(updatedProduct);
 
-        return res.redirect(`/products/${updatedProduct}`);
+        return res.redirect(`/products`);
     });
 });
 
