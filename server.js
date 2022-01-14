@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 app.use((req, res, next) => {    
-    // console.log("I'm running for another new route")
-	// console.log(`${req.method} ${req.originalUrl}`);    
+    console.log("I'm running for another new route")
+	console.log(`${req.method} ${req.originalUrl}`);    
 	next();
 });
 
@@ -47,6 +47,7 @@ app.get('/products', (req, res) => {
 });
 
 app.post('/products', (req, res) => {
+    // Start by console logging things out here for the req, then req.body
     products.create(req.body, (error, createdProduct) => {
         if(error) console.log(error);
         console.log(createdProduct);
@@ -87,14 +88,6 @@ app.get('/products/:productId', (req, res) => {
     });
     
 });
-
-// app.get("/products/:index", function(req, res) {
-    //     res.send(
-        //         `<h1>Would you like to buy this cool ${products[req.params.index].name}</h1>
-        //         <h3>Price: $${products[req.params.index].price}</h3>
-        //         <ahref="${products[req.params.index].image}">Image</a>`
-        //         )
-        // })
         
 app.get("/*", (req, res) => {
     const context = { error: req.error };
