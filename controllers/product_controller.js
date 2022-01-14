@@ -79,4 +79,26 @@ router.delete('/:productId', (req, res) => {
     })
 })
 
+router.get('/:productId/edit', (req, res) => {
+    products.findById(req.params.productId, (error, updatedProduct) => {
+        if(error) console.log(error);
+
+        console.log(updatedProduct);
+        res.render('edit.ejs', { product: updatedProduct})
+    })
+})
+
+router.put('/:productId', (req, res) => {
+    console.log(`The request is ${req}`)
+    console.log(`The request's body is ${req.body}`)
+
+    products.findByIdAndUpdate(req.params.productId, req.body,(error, updatedProduct) => {
+        if (error) return console.log(error);
+
+        console.log(updatedProduct);
+
+        return res.redirect(`/products/${updatedProduct}`);
+    });
+});
+
 module.exports = router;
