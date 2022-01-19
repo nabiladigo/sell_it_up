@@ -18,5 +18,9 @@
     <script src="/scripts/bulma.js" defer></script>
     <script src="/scripts/main.js" defer></script>
 
-    <title>SellItUp</title>
+    <% if(typeof page !== 'undefined') { %>
+        <title>Sell It Up - <%= page %></title>
+    <% } else  { %>
+        <title>Sell It Up</title>
+    <% } %>
 </head>

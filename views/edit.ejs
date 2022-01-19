@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <%- include ('./partials/head.ejs') %>
+    <!-- This is my heading now -->
+    <%- include ('./partials/head.ejs', {page: 'All products'}) %>
     
-  <!-- This is my nav bar now -->
-  <%- include ('./partials/nav.ejs') %>
+    <!-- This is my nav bar now -->
+    <%- include ('./partials/nav.ejs') %>
+
     <section class="hero is-medium has-background-light">
       <div class="hero-body">
         <h1 class="title">Edit Product page</h1>
