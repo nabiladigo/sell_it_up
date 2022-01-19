@@ -17,7 +17,6 @@ app.use(express.static('public'));
 app.use(methodOverride('_method'))
 
 app.use('/products', controllers.product)
-app.use('/products', controllers.user)
 
 app.use((req, res, next) => {    
     console.log("I'm running for another new route")
