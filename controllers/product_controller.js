@@ -1,10 +1,53 @@
 const express = require('express');
 const router = express.Router();
-const products = require('../models/product_model.js')
+const { Product } = require('../models')
+
+Product.deleteMany({}, (error, deletedProduct) => {
+    if(error) console.log(error);
+    Product.insertMany(
+        [
+            {
+                name: "Eric and Troy's Awesome class",
+                price: 100,
+                image: "https://i.pinimg.com/originals/81/6b/83/816b83a23a6f4b0405bd6699b854a6bd.jpg",
+                description: "This is the best class because they named themselves the blue devils!",
+            },
+            {
+                name: "Some other thing",
+                price: 200,
+                image: "https://www.rd.com/wp-content/uploads/2021/03/GettyImages-1133605325-scaled-e1617227898456.jpg",
+                description: "Another description!",
+            },
+            {
+                name: "Coders Unite",
+                price: 500,
+                image: "https://hips.hearstapps.com/countryliving.cdnds.net/17/47/1511194376-cavachon-puppy-christmas.jpg",
+                description: "We love coding!",
+            },
+        ],
+          function (error, createdProduct) {
+            if (error) {
+              return console.log(error);
+            }
+            console.log("=== Seed Complete ===");
+            console.log(createdProduct);
+          }
+    )
+    console.log(deletedProduct)
+}
+)
 
 router.get('/', (req, res) => {
     
-    const allProducts = products.find();
+    Product.find({}, (error, foundProducts) => {
+        if(error) return console.log(error);
+
+        console.log(foundProducts)
+        context = {
+            products: foundProducts
+        }
+        res.render('index.ejs', context);
+    })
     /* 
     1. the first param of render() is the .ejs file 
     that we want to inject data into.
@@ -18,8 +61,6 @@ router.get('/', (req, res) => {
     the show.ejs file called product, 
     and its value the foundItem
    */
-    const context = { products: allProducts };
-    res.render('index.ejs', context);
 
 });
 
