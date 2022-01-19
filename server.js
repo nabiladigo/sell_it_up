@@ -1,7 +1,7 @@
 // Any imports
 const express = require('express');
 const app = express();
-const productsController = require('./controllers/product_controller.js')
+const controllers = require('./controllers')
 const methodOverride = require('method-override');
 
 // const allProducts = products.find();
@@ -16,7 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.use(methodOverride('_method'))
 
-app.use('/products', productsController)
+app.use('/products', controllers.product)
+app.use('/products', controllers.user)
 
 app.use((req, res, next) => {    
     console.log("I'm running for another new route")
